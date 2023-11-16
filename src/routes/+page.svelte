@@ -35,6 +35,8 @@
 		y: 0
 	};
 
+	let keyLock = 0;
+
 	function initGame() {
 		randomFood();
 
@@ -118,6 +120,8 @@
 	}
 
 	function handleKeyDown(event) {
+		if (keyLock) return;
+
 		switch (event.code) {
 			case 'ArrowUp':
 				if (snake.direction === DIRECTION.DOWN) return;
@@ -141,6 +145,8 @@
 				setup();
 				break;
 		}
+
+		keyLock = 1;
 	}
 
 	function randomFood() {
@@ -208,9 +214,10 @@
 			drawSnake();
 
 			log(snake, food, score);
+			keyLock = 0;
 		}
 
-		const ticker = setInterval(update, 1000 / 3);
+		const ticker = setInterval(update, 1000 / 5);
 	}
 
 	function welcome() {
