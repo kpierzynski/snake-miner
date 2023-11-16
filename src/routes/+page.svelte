@@ -42,6 +42,7 @@
 
 		score = 0;
 		clearLogs();
+		keyLock = 0;
 		snake.head.x = 4;
 		snake.head.y = 4;
 		snake.direction = DIRECTION.RIGHT;
