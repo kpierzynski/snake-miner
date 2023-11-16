@@ -98,8 +98,12 @@
 		ctx.font = '50px consolas';
 
 		const textGameOver = `GAME OVER: ${score}`;
-		const textWidth = ctx.measureText(textGameOver).width;
+		let textWidth = ctx.measureText(textGameOver).width;
 		ctx.fillText(textGameOver, (canvasSize - textWidth) / 2, canvasSize / 2);
+
+		const textRestart = `Press R to restart`;
+		textWidth = ctx.measureText(textRestart).width;
+		ctx.fillText(textRestart, (canvasSize - textWidth) / 2, canvasSize / 2 + 60);
 	}
 
 	function drawGrid() {
