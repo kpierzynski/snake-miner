@@ -157,10 +157,10 @@
 		canvas.focus();
 
 		async function update() {
-			console.log('tick');
 			if (!isNextMoveValid()) {
+				clearInterval(ticker);
 				console.log('GAME OVER');
-				console.log(getLogs());
+				drawEndGame();
 
 				const response = await fetch('/', {
 					method: 'POST',
@@ -170,8 +170,6 @@
 					body: JSON.stringify(getLogs())
 				});
 
-				drawEndGame();
-				clearInterval(ticker);
 				return;
 			}
 
