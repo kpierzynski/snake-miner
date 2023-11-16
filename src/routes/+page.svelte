@@ -11,10 +11,10 @@
 	const columns = canvasSize / blockSize;
 
 	const DIRECTION = {
-		UP: 'up',
-		DOWN: 'down',
-		LEFT: 'left',
-		RIGHT: 'right'
+		UP: 'dU',
+		DOWN: 'dD',
+		LEFT: 'dL',
+		RIGHT: 'dR'
 	};
 
 	const snake = {
@@ -164,22 +164,29 @@
 		}
 	}
 
+	async function sendLogs() {
+		try {
+			const response = await fetch('/', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(getLogs())
+			});
+		} catch (e) {
+			console.log(e);
+		}
+	}
+
 	function setup() {
 		canvas.focus();
 
 		async function update() {
 			if (!isNextMoveValid()) {
 				clearInterval(ticker);
-				console.log('GAME OVER');
-				drawEndGame();
 
-				const response = await fetch('/', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify(getLogs())
-				});
+				drawEndGame();
+				sendLogs();
 
 				return;
 			}
@@ -214,7 +221,8 @@
 			drawFood();
 			drawSnake();
 
-			log(snake, food, score);
+			const { tail, ...logSnake } = snake;
+			log({ ...logSnake, tail: snake.tail.length }, food, score);
 			keyLock = 0;
 		}
 
@@ -239,6 +247,7 @@
 
 	let canvas;
 	let lock = 1;
+
 	$: ctx = canvas?.getContext('2d');
 	$: if (ctx && lock) {
 		lock = 0;

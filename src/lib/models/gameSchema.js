@@ -28,16 +28,10 @@ const gameSchema = new mongoose.Schema({
                     required: true,
                 },
             },
-            tail: [{
-                x: {
-                    type: Number,
-                    required: true,
-                },
-                y: {
-                    type: Number,
-                    required: true,
-                },
-            }],
+            tail: {
+                type: Number,
+                required: true,
+            },
             direction: {
                 type: String,
                 required: true,
